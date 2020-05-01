@@ -19,7 +19,7 @@
 
 #job following new trim by Shelly on 032020
 
-
+## What will this line do to the repo? Will it destroy it?
 # Directories and programs
 bismark_dir="/gscratch/srlab/programs/Bismark-0.21.0"
 bowtie2_dir="/gscratch/srlab/programs/bowtie2-2.3.4.1-linux-x86_64/"
