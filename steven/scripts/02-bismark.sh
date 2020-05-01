@@ -12,7 +12,22 @@
 ## Memory per node
 #SBATCH --mem=100G
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=sr320@uw.edu
+#SBATCH --ma
+#${genome_folder}
+
+
+find ${reads_dir}*_R1_001_val_1.fq.gz \
+| xargs basename -s _R1_001_val_1.fq.gz | xargs -I{} ${bismark_dir}/bismark \
+--path_to_bowtie ${bowtie2_dir} \
+-genome ${genome_folder} \
+-p 4 \
+-score_min L,0,-0.6 \
+-1 /gscratch/srlab/strigg/data/Pgenr/FASTQS/{}_R1_001_val_1.fq.gz \
+-2 /gscratch/srlab/strigg/data/Pgenr/FASTQS/{}_R2_001_val_2.fq.gz \
+
+
+
+il-user=sr320@uw.edu
 ## Specify the working directory for this job
 #SBATCH --chdir=/gscratch/scrubbed/sr320/1231/
 
@@ -32,50 +47,7 @@ source /gscratch/srlab/programs/scripts/paths.sh
 #${bismark_dir}/bismark_genome_preparation \
 #--verbose \
 #--parallel 28 \
-#--path_to_aligner ${bowtie2_dir} \
-#${genome_folder}
-
-
-find ${reads_dir}*_R1_001_val_1.fq.gz \
-| xargs basename -s _R1_001_val_1.fq.gz | xargs -I{} ${bismark_dir}/bismark \
---path_to_bowtie ${bowtie2_dir} \
--genome ${genome_folder} \
--p 4 \
--score_min L,0,-0.6 \
--1 /gscratch/srlab/strigg/data/Pgenr/FASTQS/{}_R1_001_val_1.fq.gz \
--2 /gscratch/srlab/strigg/data/Pgenr/FASTQS/{}_R2_001_val_2.fq.gz \
-
-
-
-
-find *.bam | \
-xargs basename -s .bam | \
-xargs -I{} ${bismark_dir}/deduplicate_bismark \
---bam \
---paired \
-{}.bam
-
-
-
-${bismark_dir}/bismark_methylation_extractor \
---bedGraph --counts --scaffolds \
---multicore 14 \
---buffer_size 75% \
-*deduplicated.bam
-
-
-
-# Bismark processing report
-
-${bismark_dir}/bismark2report
-
-#Bismark summary report
-
-${bismark_dir}/bismark2summary
-
-
-
-# Sort files for methylkit and IGV
+#--path_to_aligner ${bowtie2_dir} \V
 
 find *deduplicated.bam | \
 xargs basename -s .bam | \
