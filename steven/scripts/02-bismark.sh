@@ -27,7 +27,7 @@ genome_folder="/gscratch/srlab/sr320/data/geoduck/v01/"
 
 source /gscratch/srlab/programs/scripts/paths.sh
 
-
+# What will this do to the repo, since I haven't pulled from main repo?
 #
 #${bismark_dir}/bismark_genome_preparation \
 #--verbose \
