@@ -12,6 +12,7 @@
 ## Memory per node
 #SBATCH --mem=100G
 #SBATCH --mail-type=ALL
+
 #SBATCH --mail-user=sr320@uw.edu
 ## Specify the working directory for this job
 #SBATCH --chdir=/gscratch/scrubbed/sr320/1231/
@@ -33,73 +34,22 @@ source /gscratch/srlab/programs/scripts/paths.sh
 #--verbose \
 #--parallel 28 \
 #--path_to_aligner ${bowtie2_dir} \
+
+#SBATCH --ma
+
 #${genome_folder}
 
 
 find ${reads_dir}*_R1_001_val_1.fq.gz \
-| xargs basename -s _R1_001_val_1.fq.gz | xargs -I{} ${bismark_dir}/bismark \
---path_to_bowtie ${bowtie2_dir} \
--genome ${genome_folder} \
--p 4 \
--score_min L,0,-0.6 \
--1 /gscratch/srlab/strigg/data/Pgenr/FASTQS/{}_R1_001_val_1.fq.gz \
--2 /gscratch/srlab/strigg/data/Pgenr/FASTQS/{}_R2_001_val_2.fq.gz \
+| xargs basename -s _R1_00
+#--verbose \
+#--parallel 28 \adfajdfjajkfkajf
+akfakfjkasjf
+akfakdjfkajdf
+akakdfjakf
 
 
 
-
-find *.bam | \
-xargs basename -s .bam | \
-xargs -I{} ${bismark_dir}/deduplicate_bismark \
---bam \
---paired \
-{}.bam
-
-
-
-${bismark_dir}/bismark_methylation_extractor \
---bedGraph --counts --scaffolds \
---multicore 14 \
---buffer_size 75% \
-*deduplicated.bam
-
-
-
-# Bismark processing report
-
-${bismark_dir}/bismark2report
-
-#Bismark summary report
-
-${bismark_dir}/bismark2summary
-
-
-
-# Sort files for methylkit and IGV
-
-find *deduplicated.bam | \
-xargs basename -s .bam | \
-xargs -I{} ${samtools} \
-sort --threads 28 {}.bam \
--o {}.sorted.bam
-
-# Index sorted files for IGV
-# The "-@ 16" below specifies number of CPU threads to use.
-
-find *.sorted.bam | \
-xargs basename -s .sorted.bam | \
-xargs -I{} ${samtools} \
-index -@ 28 {}.sorted.bam
-
-
-
-
-
-find *deduplicated.bismark.cov.gz \
-| xargs basename -s _R1_001_val_1_bismark_bt2_pe.deduplicated.bismark.cov.gz \
-| xargs -I{} ${bismark_dir}/coverage2cytosine \
---genome_folder ${genome_folder} \
--o {} \
 --merge_CpG \
 --zero_based \
 {}_R1_001_val_1_bismark_bt2_pe.deduplicated.bismark.cov.gz
