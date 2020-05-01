@@ -19,23 +19,13 @@
 find ${reads_dir}*_R1_001_val_1.fq.gz \
 | xargs basename -s _R1_00
 #--verbose \
-#--parallel 28 \
-#--path_to_aligner ${bowtie2_dir} \V
+#--parallel 28 \adfajdfjajkfkajf
+akfakfjkasjf
+akfakdjfkajdf
+akakdfjakf
 
-find *deduplicated.bam | \
-xargs basename -s .bam | \
-xargs -I{} ${samtools} \
-sort --threads 28 {}.bam \
--o {}.sorted.bam
 
-# Index sorted files for IGV
-# The "-@ 16" below specifies number of CPU threadsadfakjdfankfna
-dfa
-a
-fakdfja
-fafja
-f
--o {} \
+
 --merge_CpG \
 --zero_based \
 {}_R1_001_val_1_bismark_bt2_pe.deduplicated.bismark.cov.gz
